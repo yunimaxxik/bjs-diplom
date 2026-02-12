@@ -13,15 +13,16 @@ ApiConnector.current((response) => {
 });
 
 const rate = new RatesBoard();
-setInterval(
+function fetchAndDisplayRates() {
 	ApiConnector.getStocks((response) => {
 		if (response.success) {
 			rate.clearTable();
 			rate.fillTable(response.data);
 		}
-	}),
-	60000,
-);
+	});
+}
+fetchAndDisplayRates();
+setInterval(fetchAndDisplayRates, 60000);
 
 const manager = new MoneyManager();
 manager.addMoneyCallback = (data) => {
